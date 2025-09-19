@@ -28,7 +28,7 @@
 - [Acknowledgement](#acknowledgement)
 
 # 🔥News
-
+* **[2025.09.19]** : **RoMA has been accepted by NeurlPS 2025.**
 * **[2025.03.13]**  The paper is available on [arXiv](http://arxiv.org/abs/2503.10392).
 
 # 📄Abstract
