@@ -1,4 +1,3 @@
-
 <p align="center">
 
   <h2 align="center"><strong>RoMA: Scaling up Mamba-based Foundation Models for Remote Sensing</strong></h2>
