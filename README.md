@@ -17,8 +17,8 @@
 # 📚 Contents
 
 - [News](#news)
-- [RoMA:Overview, Pretraining and Evaluation Results](#overview)
-- [RoMA-VL:Overview, Pretraining and Evaluation Results](#overview)
+- [RoMA: Overview, Pretraining and Evaluation Results](#overview)
+- [RoMA-VL: Overview, Pretraining and Evaluation Results](#overview)
 - [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
