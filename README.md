@@ -271,14 +271,105 @@ For implementation of each task, please check the corresponding folder for more 
 
 Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
 
-
-<figure>
-<img src="assets/image-20250311170540530.png">
-<figcaption align = "center"><b>Figure 1: Overview of the RoMA Pretraining Pipeline. 
- </b></figcaption>
+<figure align="center">
+  <img src="https://github.com/user-attachments/assets/5b0ea26f-54dc-4326-8143-8f1459789148" alt="roma-vl" width="100%">
+  <figcaption><b>Figure 2: Overview of the RoMA-VL Pretraining Pipeline.</b></figcaption>
 </figure>
 
-The input image is first divided into patches, and high-value patches are selected for random rotation using the Adaptive Rotation Encoding Strategy. These patches are then tokenized and processed by the Mamba encoder. The encoded features undergo autoregressive next-token prediction, followed by a multi-scale strategy that computes losses at different scales for gradient updates. RoMA optimally adapts the Mamba architecture for remote sensing, making its encoder a robust feature extractor for diverse downstream tasks.
+The visual branch integrates the Adaptive Rotation Encoding (ARE) strategy into a Mamba-based vision encoder, where visual features interact with causally masked textual features through cross-attention to enable autoregressive prediction. A multi-granularity prediction strategy is further introduced to generate multi-granularity prediction losses.
+
+# ✅RoMA-VL Evaluation Results
+
+<h3>Zero-shot performance of scene classification (Top-1 Accuracy) on RoMA-VL</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Methods</th>
+      <th>Publication</th>
+      <th>Backbone</th>
+      <th>Params</th>
+      <th>RSI-CB128</th>
+      <th>RSI-CB256</th>
+      <th>EuroSAT</th>
+      <th>RESISC45</th>
+      <th>RS2800</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="9"><strong><em>Natural Image pretraining</em></strong></td>
+    </tr>
+    <tr>
+      <td>OpenCLIP</td>
+      <td>PMLR'21</td>
+      <td>ViT-B</td>
+      <td>149M</td>
+      <td>18.52</td>
+      <td>23.43</td>
+      <td>10.91</td>
+      <td>13.18</td>
+      <td>14.29</td>
+    </tr>
+    <tr>
+      <td colspan="9"><strong><em>RS Image pretraining</em></strong></td>
+    </tr>
+    <tr>
+      <td>DynamicVis</td>
+      <td>arXiv</td>
+      <td>Mamba-B</td>
+      <td>100M</td>
+      <td>18.00</td>
+      <td>14.79</td>
+      <td>5.95</td>
+      <td>2.54</td>
+      <td>17.61</td>
+    </tr>
+    <tr>
+      <td>SkyCLIP</td>
+      <td>AAAI'24</td>
+      <td>ViT-B</td>
+      <td>151M</td>
+      <td>37.99</td>
+      <td>48.68</td>
+      <td>44.48</td>
+      <td>58.79</td>
+      <td>67.68</td>
+    </tr>
+    <tr>
+      <td>RemoteCLIP</td>
+      <td>TGRS'24</td>
+      <td>ViT-B</td>
+      <td>151M</td>
+      <td>24.07</td>
+      <td>44.19</td>
+      <td>36.96</td>
+      <td><strong>65.53</strong></td>
+      <td>62.04</td>
+    </tr>
+    <tr>
+      <td>CoCa</td>
+      <td>arXiv</td>
+      <td>ViT-B</td>
+      <td>383M</td>
+      <td>41.49</td>
+      <td>48.40</td>
+      <td>43.43</td>
+      <td>52.10</td>
+      <td>67.93</td>
+    </tr>
+    <tr>
+      <td><strong>RoMA-VL</strong></td>
+      <td>--</td>
+      <td><strong>Mamba-B</strong></td>
+      <td><strong>216M</strong></td>
+      <td><strong>50.19</strong></td>
+      <td><strong>53.95</strong></td>
+      <td><strong>52.90</strong></td>
+      <td>63.81</td>
+      <td><strong>75.00</strong></td>
+    </tr>
+  </tbody>
+</table>
 
 # 🚀RoMA-VL:Pretraining
 
