@@ -17,25 +17,24 @@
 # 📚 Contents
 
 - [News](#news)
-- [Abstract](#abstract)
-- [Overview](#overview)
-- [Evaluation Results](#evaluation-results)
-- [Scaling Behavior](#scaling-behavior)
-- [Pretraining](#pretraining)
-- [Checkpoints](#checkpoints)
+- [RoMA-Abstract](#abstract)
+- [RoMA-Overview](#overview)
+- [RoMA-Pretraining](#pretraining)
+- [RoMA-Checkpoints](#checkpoints)
+- [RoMA-Evaluation Results](#evaluation-results)
 - [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
 # 🔥News
-* **[2026.04.20]** : **RoMA-VL has been released.**
+* **[2026.04.20]** : **RoMA-VL codes has been released.**
 * **[2025.09.19]** : **RoMA has been accepted by NeurlPS 2025.**
-* **[2025.03.13]**  The paper is available on [arXiv](http://arxiv.org/abs/2503.10392).
+* **[2025.03.13]**  The paper of RoMA is available on [arXiv](http://arxiv.org/abs/2503.10392).
 
-# 📄Abstract
+# 📄RoMA-Abstract
 
 Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
 
-# 🔍Overview
+# 🔍RoMA-Overview
 
 <figure>
 <img src="assets/image-20250311170540530.png">
@@ -45,7 +44,15 @@ Recent advances in self-supervised learning for Vision Transformers (ViTs) have 
 
 The input image is first divided into patches, and high-value patches are selected for random rotation using the Adaptive Rotation Encoding Strategy. These patches are then tokenized and processed by the Mamba encoder. The encoded features undergo autoregressive next-token prediction, followed by a multi-scale strategy that computes losses at different scales for gradient updates. RoMA optimally adapts the Mamba architecture for remote sensing, making its encoder a robust feature extractor for diverse downstream tasks.
 
-# ✅Evaluation Results
+# 🚀RoMA-Pretraining
+
+For environment setup and pretraining instructions, please refer to [RoMA/requirements.txt](https://github.com/MiliLab/RoMA/blob/main/RoMA/requirements.txt)  and [RoMA/train.sh](https://github.com/MiliLab/RoMA/blob/main/RoMA/train.sh).
+
+# 🎯RoMA-Checkpoints
+
+We provide our pretrained weights in <a href="https://pan.baidu.com/s/1e7VOvca7894hugM-f2UitQ?pwd=e1up">Baidu</a> & <a href="https://huggingface.co/initiacms/RoMA">Hugging Face</a>.
+
+# ✅RoMA-Evaluation Results
 
 <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
   <caption style="caption-side: top; text-align: center; font-weight: bold; margin-bottom: 10px;">
@@ -264,31 +271,8 @@ For implementation of each task, please check the corresponding folder for more 
 * [Change Detection](https://github.com/MiliLab/RoMA/tree/main/Change%20Detection)
 * [Semantic Segmentation](https://github.com/MiliLab/RoMA/tree/main/Semantic%20Segmentation)
 
-# 📈Scaling Behavior
 
-<figure>
-<img src="assets/image-20250312111728161.png">
-<figcaption align = "center"><b>Figure 2: Scaling with Data Volume. 
- </b></figcaption>
-</figure>
 
-Mamba shows a clear performance boost on downstream tasks as the pretraining data volume grows. We pretrain the Mamba-Base model with RoMA across various data scales and evaluate its performance in the downstream tasks. As illustrated in Figure 2, larger datasets lead to significant improvements. Mamba-based RSFMs exhibit no significant performance bottlenecks across a broad pretraining data scale from 62.5K to 4M, achieving data learning capabilities on par with ViT-based RSFMs. 
-
-<figure>
-<img src="assets/image-20250312112103330.png">
-<figcaption align = "center"><b>Figure 3: Scaling with Model Size. 
- </b></figcaption>
-</figure>
-
-Mamba’s performance also improves with increasing model size. We conduct extensive pretraining on four model variants—Tiny, Small, Base, and Large—following the configurations in our code. As shown in Figure 3, larger models consistently achieve superior results on downstream tasks. Although Mamba-Large surpasses Mamba-Base in AID dataset, its performance gain remains limited, likely due to insufficient pretraining. With only 300 epochs on 4 million samples, the training may not be adequate for a 297M-parameter model. Due to experimental constraints, we did not extend pretraining to 800 epochs as in MAE. The OSCD and SpaceNet experiments are ongoing, with updates to follow. However, these results do not alter our key findings: Mamba-based RSFMs pretrained with RoMA demonstrate performance gains as model parameters scale. 
-
-# 🚀Pretraining
-
-For environment setup and pretraining instructions, please refer to [RoMA/requirements.txt](https://github.com/MiliLab/RoMA/blob/main/RoMA/requirements.txt)  and [RoMA/train.sh](https://github.com/MiliLab/RoMA/blob/main/RoMA/train.sh).
-
-# 🎯Checkpoints
-
-We provide our pretrained weights in <a href="https://pan.baidu.com/s/1e7VOvca7894hugM-f2UitQ?pwd=e1up">Baidu</a> & <a href="https://huggingface.co/initiacms/RoMA">Hugging Face</a>.
 
 # 🔗Citation
 
