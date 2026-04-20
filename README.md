@@ -53,7 +53,6 @@ The input image is first divided into patches, and high-value patches are select
 
 For environment setup and pretraining instructions, please refer to [RoMA/requirements.txt](https://github.com/MiliLab/RoMA/blob/main/RoMA/requirements.txt)  and [RoMA/train.sh](https://github.com/MiliLab/RoMA/blob/main/RoMA/train.sh).
 
-# 🎯RoMA_Checkpoints
 
 We provide our pretrained weights in <a href="https://pan.baidu.com/s/1e7VOvca7894hugM-f2UitQ?pwd=e1up">Baidu</a> & <a href="https://huggingface.co/initiacms/RoMA">Hugging Face</a>.
 
@@ -339,8 +338,6 @@ torchrun --nproc_per_node=8 --nnodes=1 \
   --warmup 3000
 ```
 
-
-# 🎯RoMA-VL_Checkpoints
 
 We provide our pretrained weights in  <a href="https://huggingface.co/love-death-robot/RoMA-VL">Hugging Face</a>.
 
