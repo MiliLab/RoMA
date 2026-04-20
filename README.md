@@ -17,16 +17,8 @@
 # 📚 Contents
 
 - [News](#news)
-- [RoMA_Abstract](#abstract)
-- [RoMA_Overview](#overview)
-- [RoMA_Pretraining](#pretraining)
-- [RoMA_Checkpoints](#checkpoints)
-- [RoMA_Evaluation Results](#evaluation-results)
-- [RoMA-VL_Abstract](#abstract2)
-- [RoMA-VL_Overview](#overview2)
-- [RoMA-VL_Pretraining](#pretraining2)
-- [RoMA-VL_Checkpoints](#checkpoints2)
-- [RoMA-VL_Evaluation Results](#evaluation-results2)
+- [RoMA:Overview, Pretraining and Evaluation Results](#overview)
+- [RoMA-VL:Overview, Pretraining and Evaluation Results](#overview)
 - [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
@@ -35,11 +27,10 @@
 * **[2025.09.19]** : **RoMA has been accepted by NeurlPS 2025.**
 * **[2025.03.13]**  The paper of RoMA is available on [arXiv](http://arxiv.org/abs/2503.10392).
 
-# 📄RoMA_Abstract
+# 📄RoMA_Overview
 
 Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
 
-# 🔍RoMA_Overview
 
 <figure>
 <img src="assets/image-20250311170540530.png">
@@ -276,11 +267,10 @@ For implementation of each task, please check the corresponding folder for more 
 * [Semantic Segmentation](https://github.com/MiliLab/RoMA/tree/main/Semantic%20Segmentation)
 
 
-# 📄RoMA-VL_Abstract
+# 📄RoMA-VL:Overview
 
 Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
 
-# 🔍RoMA-VL_Overview
 
 <figure>
 <img src="assets/image-20250311170540530.png">
@@ -290,7 +280,7 @@ Recent advances in self-supervised learning for Vision Transformers (ViTs) have 
 
 The input image is first divided into patches, and high-value patches are selected for random rotation using the Adaptive Rotation Encoding Strategy. These patches are then tokenized and processed by the Mamba encoder. The encoded features undergo autoregressive next-token prediction, followed by a multi-scale strategy that computes losses at different scales for gradient updates. RoMA optimally adapts the Mamba architecture for remote sensing, making its encoder a robust feature extractor for diverse downstream tasks.
 
-# 🚀RoMA-VL_Pretraining
+# 🚀RoMA-VL:Pretraining
 
 ## Environment
 
@@ -341,7 +331,7 @@ torchrun --nproc_per_node=8 --nnodes=1 \
 
 We provide our pretrained weights in  <a href="https://huggingface.co/love-death-robot/RoMA-VL">Hugging Face</a>.
 
-# ✅RoMA-VL_Zero-shot Evaluation
+# ✅RoMA-VL:Zero-shot Evaluation
 
 We evaluate the pretrained model on the following remote sensing benchmark datasets:
 
