@@ -17,11 +17,16 @@
 # 📚 Contents
 
 - [News](#news)
-- [RoMA-Abstract](#abstract)
-- [RoMA-Overview](#overview)
-- [RoMA-Pretraining](#pretraining)
-- [RoMA-Checkpoints](#checkpoints)
-- [RoMA-Evaluation Results](#evaluation-results)
+- [RoMA_Abstract](#abstract)
+- [RoMA_Overview](#overview)
+- [RoMA_Pretraining](#pretraining)
+- [RoMA_Checkpoints](#checkpoints)
+- [RoMA_Evaluation Results](#evaluation-results)
+- [RoMA-VL_Abstract](#abstract2)
+- [RoMA-VL_Overview](#overview2)
+- [RoMA-VL_Pretraining](#pretraining2)
+- [RoMA-VL_Checkpoints](#checkpoints2)
+- [RoMA-VL_Evaluation Results](#evaluation-results2)
 - [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
@@ -30,11 +35,11 @@
 * **[2025.09.19]** : **RoMA has been accepted by NeurlPS 2025.**
 * **[2025.03.13]**  The paper of RoMA is available on [arXiv](http://arxiv.org/abs/2503.10392).
 
-# 📄RoMA-Abstract
+# 📄RoMA_Abstract
 
 Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
 
-# 🔍RoMA-Overview
+# 🔍RoMA_Overview
 
 <figure>
 <img src="assets/image-20250311170540530.png">
@@ -44,15 +49,15 @@ Recent advances in self-supervised learning for Vision Transformers (ViTs) have 
 
 The input image is first divided into patches, and high-value patches are selected for random rotation using the Adaptive Rotation Encoding Strategy. These patches are then tokenized and processed by the Mamba encoder. The encoded features undergo autoregressive next-token prediction, followed by a multi-scale strategy that computes losses at different scales for gradient updates. RoMA optimally adapts the Mamba architecture for remote sensing, making its encoder a robust feature extractor for diverse downstream tasks.
 
-# 🚀RoMA-Pretraining
+# 🚀RoMA_Pretraining
 
 For environment setup and pretraining instructions, please refer to [RoMA/requirements.txt](https://github.com/MiliLab/RoMA/blob/main/RoMA/requirements.txt)  and [RoMA/train.sh](https://github.com/MiliLab/RoMA/blob/main/RoMA/train.sh).
 
-# 🎯RoMA-Checkpoints
+# 🎯RoMA_Checkpoints
 
 We provide our pretrained weights in <a href="https://pan.baidu.com/s/1e7VOvca7894hugM-f2UitQ?pwd=e1up">Baidu</a> & <a href="https://huggingface.co/initiacms/RoMA">Hugging Face</a>.
 
-# ✅RoMA-Evaluation Results
+# ✅RoMA_Evaluation Results
 
 <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
   <caption style="caption-side: top; text-align: center; font-weight: bold; margin-bottom: 10px;">
@@ -272,6 +277,100 @@ For implementation of each task, please check the corresponding folder for more 
 * [Semantic Segmentation](https://github.com/MiliLab/RoMA/tree/main/Semantic%20Segmentation)
 
 
+# 📄RoMA-VL_Abstract
+
+Recent advances in self-supervised learning for Vision Transformers (ViTs) have fueled breakthroughs in remote sensing (RS) foundation models. However, the quadratic complexity of self-attention poses a significant barrier to scalability, particularly for large models and high-resolution images. While the linear-complexity Mamba architecture offers a promising alternative, existing RS applications of Mamba remain limited to supervised tasks on small, domain-specific datasets. To address these challenges, we propose RoMA, a framework that enables scalable self-supervised pretraining of Mamba-based RS foundation models using large-scale, diverse, unlabeled data. 
+
+# 🔍RoMA-VL_Overview
+
+<figure>
+<img src="assets/image-20250311170540530.png">
+<figcaption align = "center"><b>Figure 1: Overview of the RoMA Pretraining Pipeline. 
+ </b></figcaption>
+</figure>
+
+The input image is first divided into patches, and high-value patches are selected for random rotation using the Adaptive Rotation Encoding Strategy. These patches are then tokenized and processed by the Mamba encoder. The encoded features undergo autoregressive next-token prediction, followed by a multi-scale strategy that computes losses at different scales for gradient updates. RoMA optimally adapts the Mamba architecture for remote sensing, making its encoder a robust feature extractor for diverse downstream tasks.
+
+# 🚀RoMA-VL_Pretraining
+
+## Environment
+
+- Python 3.8
+- PyTorch 2.1.0 with CUDA 12.1
+- torchvision 0.16.0
+- torchaudio 2.1.0
+- mamba-ssm 1.1.1
+- causal-conv1d 1.4.0
+
+We provide an `environment.yml` file:
+
+```bash
+conda env create -f environment.yml
+conda activate romavl
+```
+
+For installation instructions for `causal-conv1d` and  `mamba`, please refer to https://github.com/doodleima/vision_mamba.
+
+## Training
+
+
+We pretrain the model on the [RS5M]( https://huggingface.co/datasets/omlab/RS5M) dataset.
+
+```bash
+export PYTHONPATH=./src:$PYTHONPATH
+
+torchrun --nproc_per_node=8 --nnodes=1 \
+  -m open_clip_train.main \
+  --train-data "/path/to/dataset/train-a-{0000..0031}.tar::/path/to/dataset/train-b-{0000..0031}.tar" \
+  --train-num-samples 4833280 \
+  --dataset-type webdataset \
+  --batch-size 128 \
+  --opt timm/adafactor \
+  --lr 0.0005 \
+  --eps 1e-8 \
+  --beta1 0.9 \
+  --beta2 0.999 \
+  --wd 0.011 \
+  --epochs 30 \
+  --accum-freq 2 \
+  --model coca_Mamba-B-14 \
+  --precision amp \
+  --workers 8 \
+  --warmup 3000
+```
+
+
+# 🎯RoMA-VL_Checkpoints
+
+We provide our pretrained weights in  <a href="https://huggingface.co/love-death-robot/RoMA-VL">Hugging Face</a>.
+
+# ✅RoMA-VL_Zero-shot Evaluation
+
+We evaluate the pretrained model on the following remote sensing benchmark datasets:
+
+| Dataset | Link |
+| --- | --- |
+| RSI-CB128 | [RSI-CB128](https://github.com/lehaifeng/RSI-CB) |
+| RSI-CB256 | [RSI-CB256](https://github.com/lehaifeng/RSI-CB256) |
+| EuroSAT | [EuroSAT](https://github.com/phelber/eurosat) |
+| RESISC45 | [RESISC45](https://huggingface.co/datasets/timm/resisc45) |
+| RS2800 | [RS2800](https://huggingface.co/datasets/blanchon/RSSCN7/tree/main) |
+
+
+```bash
+export PYTHONPATH=./src:$PYTHONPATH
+
+python -m open_clip_train.main \
+  --zero-shot-val /path/to/test/data \
+  --logs ./logs/eval \
+  --batch-size 1 \
+  --model coca_Mamba-B-14 \
+  --pretrained /path/to/checkpoint.pt \
+  --workers 1
+```
+
+Replace `/path/to/test/data` with the directory of the evaluation dataset, and replace `/path/to/checkpoint.pt` with the pretrained checkpoint.
+
 
 
 # 🔗Citation
@@ -286,6 +385,8 @@ If you find RoMA helpful, please consider citing:
   year={2025}
 }
 ```
+
+
 
 # 🤝Acknowledgement
 
